@@ -1,32 +1,42 @@
 ﻿using Backend_Hotel_Management.Models;
 using Backend_Hotel_Management.Properties.Data.Interfaces;
+using MongoDB.Driver;
 
 namespace Backend_Hotel_Management.Properties.Data.Repositories;
 
 public class ProductRepository : IProductRepository
 {
-    public Task<IEnumerable<Product>> GetAllProducts()
+    private readonly IMongoCollection<Product> _products;
+
+    public ProductRepository(MongoDbContext context)
     {
-        throw new NotImplementedException();
+        _products = context.Products;
     }
 
-    public Task<Product> GetProductById(string id)
+    public async Task<IEnumerable<Product>> GetAllProducts()
     {
-        throw new NotImplementedException();
+        return await _products.Find(p => true).ToListAsync();
     }
 
-    public Task CreateProduct(Product product)
+    public async Task<Product> GetProductById(string id)
     {
-        throw new NotImplementedException();
+        return await _products.Find(p => p.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<bool> UpdateProduct(Product product)
+    public async Task CreateProduct(Product product)
     {
-        throw new NotImplementedException();
+        await _products.InsertOneAsync(product);
     }
 
-    public Task<bool> DeleteProduct(string id)
+    public async Task<bool> UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        var updateResult = await _products.ReplaceOneAsync(p => p.Id == product.Id, product);
+        return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+    }
+
+    public async Task<bool> DeleteProduct(string id)
+    {
+        var deleteResult = await _products.DeleteOneAsync(p => p.Id == id);
+        return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
     }
 }
