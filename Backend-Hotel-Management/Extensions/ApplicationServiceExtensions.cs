@@ -10,5 +10,6 @@ public static class ApplicationServiceExtensions
     {
         services.AddCors();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
     }
 }
