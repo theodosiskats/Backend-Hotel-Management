@@ -13,9 +13,18 @@ public class ProductRepository : IProductRepository
         _products = context.Products;
     }
 
-    public async Task<IEnumerable<Product>> GetAllProducts()
+    public async Task<IEnumerable<Product>> GetAllProducts(int pageIndex, int pageSize, List<string>? categoryNames)
     {
-        return await _products.Find(p => true).ToListAsync();
+        var filter = Builders<Product>.Filter.Empty;
+        if (categoryNames is { Count: > 0 } && categoryNames[0] != null)
+        {
+            filter = Builders<Product>.Filter.In(p => p.CategoryName, categoryNames);
+        }
+
+        return await _products.Find(filter)
+            .Skip(pageIndex * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
     }
 
     public async Task<Product> GetProductById(string id)

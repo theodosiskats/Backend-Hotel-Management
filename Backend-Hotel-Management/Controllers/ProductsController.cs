@@ -14,17 +14,20 @@ public class ProductsController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+    public async Task<ActionResult<IEnumerable<Product>>> GetProducts(
+        [FromQuery] int pageIndex, 
+        [FromQuery] int pageSize, 
+        [FromQuery] List<string>? categoryNames)
     {
         try
         {
-            var products = await _productRepository.GetAllProducts();
+            var products = await _productRepository.GetAllProducts(pageIndex, pageSize, categoryNames);
             return Ok(products);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
-            throw new ApplicationException(e.Message);
+            Console.WriteLine(ex);
+            throw new ApplicationException(ex.Message);
         }
     }
     
