@@ -17,4 +17,7 @@ public class MongoDbContext
 
     public IMongoCollection<Product> Products =>
         _db.GetCollection<Product>("Products");
+    
+    public IMongoCollection<Availability> Availabilities =>
+        _db.GetCollection<Availability>("Availabilities");
 }
