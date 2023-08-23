@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Backend_Hotel_Management.Models.BaseModels;
 
+//Adds base properties that all products share
 public abstract class BaseProduct
 {
     [BsonId]

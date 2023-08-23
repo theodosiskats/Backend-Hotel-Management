@@ -13,6 +13,8 @@ public class ProductsController : BaseController
         _productRepository = productRepository;
     }
 
+    //Returns all products with pagination options or with specific
+    //one or many categoryNames (pagination/categoryNames params can be ignored)
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts(
         [FromQuery] int pageIndex, 
@@ -21,7 +23,7 @@ public class ProductsController : BaseController
     {
         try
         {
-            var products = await _productRepository.GetAllProducts(pageIndex, pageSize, categoryNames);
+            var products = await _productRepository.GetProducts(pageIndex, pageSize, categoryNames);
             return Ok(products);
         }
         catch (Exception ex)
@@ -31,6 +33,7 @@ public class ProductsController : BaseController
         }
     }
     
+    //Returns a specific product by id
     [HttpGet("id")]
     public async Task<ActionResult<Product>> GetProductById(string id)
     {
@@ -49,6 +52,7 @@ public class ProductsController : BaseController
         }
     }
 
+    //Creates a new product
     [HttpPost]
     public async Task<ActionResult> CreateProduct(Product product)
     {
@@ -64,7 +68,7 @@ public class ProductsController : BaseController
         }
     }
     
-
+    //Updates a product or throws an exception with bad request
     [HttpPut]
     public async Task<ActionResult> UpdateProduct([FromBody] Product product)
     {
@@ -82,6 +86,7 @@ public class ProductsController : BaseController
         return BadRequest("Something went wrong when we tried to update the product");
     }
 
+    //Deletes a product by id or throws an exception with bad request
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteProduct(string id)
     {
@@ -97,6 +102,5 @@ public class ProductsController : BaseController
         }
         return BadRequest("Something went wrong when deleting the product");
     }
-    
     
 }

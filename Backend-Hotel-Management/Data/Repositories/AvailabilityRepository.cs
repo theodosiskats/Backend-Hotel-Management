@@ -16,6 +16,12 @@ public class AvailabilityRepository : IAvailabilityRepository
         _products = context.Products;
     }
 
+    //Returns available products for specific category name and date range
+    //1.Finds products with the specified category name
+    //2.Finds availabilities that match the params
+    //3.Separates the productIds from the availabilities found
+    //4.Find products that their ids have been found in the availableProductIds
+    //5.Returns a List<Product> that are available for the date range with the selected category
     public async Task<ActionResult<List<Product>>> GetAvailabilitiesForCategory(string productCategory, DateTime startDate, DateTime endDate)
     {
         var relatedProducts = await _products.Find(p => p.CategoryName == productCategory).ToListAsync();
@@ -33,6 +39,7 @@ public class AvailabilityRepository : IAvailabilityRepository
         return availableProducts;
     }
 
+    //Gets all products that have availability withing the specified date range
     public async Task<ActionResult<List<Product>>> GetAvailabilityForDateRange(DateTime startDate, DateTime endDate)
     {
         var products = await _products.Find(products => true).ToListAsync();
@@ -49,6 +56,7 @@ public class AvailabilityRepository : IAvailabilityRepository
         return availableProducts;
     }
 
+    //Creates a new availability
     public async Task CreateAvailability(Availability availability)
     {
         await _availabilities.InsertOneAsync(availability);

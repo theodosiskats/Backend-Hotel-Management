@@ -20,7 +20,7 @@ public class ProductsControllerTests
     [Fact]
     public async Task GetProducts_ReturnOk_WithListOfProducts()
     {
-        _mockRepo.Setup(repo => repo.GetAllProducts(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>()))
+        _mockRepo.Setup(repo => repo.GetProducts(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>()))
             .ReturnsAsync(new List<Product>());
 
         var result = await _controller.GetProducts(0, 10, null);

@@ -7,6 +7,7 @@ public class MongoDbContext
 {
     private readonly IMongoDatabase _db;
 
+    //Setup Mongo Database Connection
     public MongoDbContext(IConfiguration configuration)
     {
         var mongoSettings = configuration.GetSection("MongoDB");
@@ -15,9 +16,11 @@ public class MongoDbContext
         _db = client.GetDatabase(mongoSettings["DatabaseName"]);
     }
 
+    //Gets Product Collection from Database
     public IMongoCollection<Product> Products =>
         _db.GetCollection<Product>("Products");
     
+    //Gets Availabilities Collection from Database
     public IMongoCollection<Availability> Availabilities =>
         _db.GetCollection<Availability>("Availabilities");
 }

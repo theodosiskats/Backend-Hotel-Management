@@ -4,7 +4,7 @@ namespace Backend_Hotel_Management.Properties.Data.Interfaces;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<Product>> GetAllProducts(
+    Task<IEnumerable<Product>> GetProducts(
         int pageIndex,
         int pageSize,
         List<string>? categoryNames);
