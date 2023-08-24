@@ -9,6 +9,8 @@ public static class ApplicationServiceExtensions
     public static void AddApplicationService(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddCors();
+        
+        //Repositories
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
     }

@@ -15,6 +15,9 @@ public class ProductsController : BaseController
 
     //Returns all products with pagination options or with specific
     //one or many categoryNames (pagination/categoryNames params can be ignored)
+    //Test with missing params: http://localhost:14727/api/Products?pageIndex=0&pageSize=10&categoryNames= 
+    //Test with params: http://localhost:14727/api/Products?pageIndex=0&pageSize=10&categoryNames=2&categoryNames=4
+    //Test without params (returns everything): http://localhost:14727/api/Products
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts(
         [FromQuery] int pageIndex, 

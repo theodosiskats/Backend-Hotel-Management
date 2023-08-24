@@ -16,12 +16,16 @@ public class AvailabilityRepository : IAvailabilityRepository
         _products = context.Products;
     }
 
-    //Returns available products for specific category name and date range
-    //1.Finds products with the specified category name
-    //2.Finds availabilities that match the params
-    //3.Separates the productIds from the availabilities found
-    //4.Find products that their ids have been found in the availableProductIds
-    //5.Returns a List<Product> that are available for the date range with the selected category
+    /// <summary>
+    /// 1.Finds products with the specified category name
+    /// 2.Finds availabilities that match the params
+    /// 3.Separates the productIds from the availabilities found
+    /// 4.Find products that their ids have been found in the availableProductIds
+    /// </summary>
+    /// <param name="productCategory">string</param>
+    /// <param name="startDate">DateTime</param>
+    /// <param name="endDate">DateTime</param>
+    /// <returns>Returns a List<Product> that are available for the date range with the selected category</returns>
     public async Task<ActionResult<List<Product>>> GetAvailabilitiesForCategory(string productCategory, DateTime startDate, DateTime endDate)
     {
         var relatedProducts = await _products.Find(p => p.CategoryName == productCategory).ToListAsync();

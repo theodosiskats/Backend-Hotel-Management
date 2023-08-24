@@ -14,9 +14,7 @@ public class AvailabilitiesController : BaseController
     }
 
     //Get all available products for specific category name in date range
-    //Test with missing params: http://localhost:14727/api/Products?pageIndex=0&pageSize=10&categoryNames= 
-    //Test with params: http://localhost:14727/api/Products?pageIndex=0&pageSize=10&categoryNames=2&categoryNames=4
-    //Test without params (returns everything): http://localhost:14727/api/Products
+    //Test with params: http://localhost:14727/api/Availabilities/string?startDate=2023-07-11&endDate=2023-07-14
     [HttpGet("{productCategory}")]
     public async Task<ActionResult<List<Product>>> GetAvailabilitiesForCategory(string productCategory,
         DateTime startDate, DateTime endDate)
